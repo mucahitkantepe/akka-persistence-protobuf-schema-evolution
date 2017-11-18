@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "scalapb/scalapb.proto";
+
+option (scalapb.options) = {
+  package_name: "com.mucahit.protobuf"
+  flat_package: true
+  single_file: true
+};
+
+message UserCreatedEventv1 {
+    string name = 1;
+}
+
+message UserCreatedEventv2 {
+    string name = 1;
+    int64 id = 2;
+}
+
+message UserCreatedEventv3 {
+    int64 id = 2;
+}
+
