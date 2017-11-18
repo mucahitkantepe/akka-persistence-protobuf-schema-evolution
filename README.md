@@ -9,7 +9,7 @@ This project includes 3 functionalities together:
 
 ### Schema Evolution with Protocol Buffers using Akka Persistence
 
-####Problem Definition
+**Problem Definition**
 Suppose that you have a UserEntity class that contains only `name`
 and your journal has already stored some events based on this entity;
 
@@ -31,11 +31,7 @@ case class UserCreatedEvent(name: String)
 So the thing you should do is to transform these event messages before you use, you can do it simply by creating a
 custom serializer.
 
-####Preparation
-1. Create .proto messages
-2. Create custom serializer
-
-######Proto messages
+**Proto messages**
 ```proto
 syntax = "proto3";
 message UserCreatedEventv1 {
@@ -51,8 +47,7 @@ message UserCreatedEventv3 {
 ```
 ScalaPB will [generate](https://scalapb.github.io/generated-code.html) Protocol Buffers classes when you compile project bu sbt
 
-
-######CustomSerializer
+**CustomSerializer**
 
 I simply versioned manifest by
 ```scala
@@ -62,12 +57,10 @@ I simply versioned manifest by
   final val currentVersion: String = v3
   override def manifest(o: AnyRef): String = s"${o.getClass.getName}|$currentVersion"
 ```
-
 When a message is being serialized by our Serializer, it will has this string manifest that created by `manifest` method
 Also when a message is being deserialized by our Serializer we will understand the message type and manifet by this manifest
 
-
-Serializing messages
+**Serializing messages**
 
 This is very simple with ScalaPB, only thing you should do is to transform your custom messages into the generated
 class by ScalaPB
@@ -82,7 +75,7 @@ class by ScalaPB
   
 ```
 
-Deserializing messages
+**Deserializing messages**
 
 Our messages are serialized using manifest and toBinary methods, so when a message is serialized, we can 
 consider it as two parts: manifest and bytes, so we are going to use both of these parameters when we deserialize messages.
