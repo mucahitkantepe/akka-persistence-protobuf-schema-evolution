@@ -14,8 +14,8 @@ Suppose that you have a UserEntity class that contains only `name`
 and your journal has already stored some events based on this entity;
 
 ```scala
-case class UserEntity(id: Long)
-case class UserCreatedEvent(id: Long)
+case class UserEntity(name: String)
+case class UserCreatedEvent(name: String)
 ```
 but you need to add another field to this entity, so Event Message should also be changed so;
 ```scala
